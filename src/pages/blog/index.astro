@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const [feature, ...rest] = posts;
+---
+<Base
+  title="Blog — Orbis Mind"
+  description="Notes from the engine room: how Orbis Mind thinks about compiling AI workloads, determinism, measured reliability, and building infrastructure you can audit."
+  active="blog"
+>
+  <header class="blog-hero">
+    <div class="wrap">
+      <span class="eyebrow" data-n="">Writing</span>
+      <h1>Notes from the engine room</h1>
+      <p>Compilers, runtimes, determinism, and measured reliability — how we build infrastructure
+        for intelligent software, and why.</p>
+    </div>
+  </header>
+
+  <section class="wrap" style="padding-bottom:70px">
+    {feature && (
+      <a class="feature-post" href={`${base}/blog/${feature.id}`} data-reveal>
+        <div class="fp-art">
+          <pre class="glyph">{`$ aether build
+→ validate · classify · route
+→ optimize · emit .ae
+✓ deterministic · SHA-256 verified`}</pre>
+        </div>
+        <div class="fp-body">
+          <div class="fp-tag">{feature.data.tag} · Latest</div>
+          <h2>{feature.data.title}</h2>
+          <p>{feature.data.description}</p>
+          <div class="fp-meta">{fmt(feature.data.date)} · {feature.data.readingTime ?? 'Article'} · {feature.data.author}</div>
+        </div>
+      </a>
+    )}
+
+    <div class="post-list" data-reveal>
+      {rest.map((post) => (
+        <a class="post-row" href={`${base}/blog/${post.id}`}>
+          <div class="pmeta"><span class="tag">{post.data.tag}</span>{fmt(post.data.date)}</div>
+          <div>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+          </div>
+          <svg class="parrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

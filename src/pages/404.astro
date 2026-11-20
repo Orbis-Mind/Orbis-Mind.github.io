@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="Not found — Orbis Mind" description="The page you were looking for doesn't exist.">
+  <section class="wrap" style="padding: clamp(70px, 16vh, 160px) 0; text-align:center;">
+    <div class="mono" style="color:var(--accent-ink); letter-spacing:.2em; font-size:13px; margin-bottom:18px;">ERROR · 404</div>
+    <h1 style="font-family:var(--serif); font-weight:500; font-size:clamp(40px,8vw,80px); letter-spacing:-0.03em; margin-bottom:16px;">Plan not found.</h1>
+    <p style="color:var(--muted); max-width:460px; margin:0 auto 30px; font-size:18px;">
+      This route didn't compile. Let's get you back to something that runs.
+    </p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a class="btn btn-primary" href={`${base}/`}>Back home</a>
+      <a class="btn btn-ghost" href={`${base}/docs`}>Documentation</a>
+    </div>
+  </section>
+</Base>

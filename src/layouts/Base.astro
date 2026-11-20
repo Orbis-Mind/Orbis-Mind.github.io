@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  active?: string;
+  ogType?: string;
+}
+const { title, description, active = '', ogType = 'website' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#100E0B" media="(prefers-color-scheme: dark)" />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+  <link rel="alternate" type="application/rss+xml" title="Orbis Mind Blog" href={`${import.meta.env.BASE_URL}rss.xml`} />
+  <meta property="og:site_name" content="Orbis Mind" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function () {
+      try {
+        var t = localStorage.getItem('om-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <Nav active={active} />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+
+  <script>
+    const root = document.documentElement;
+    function stored() { try { return localStorage.getItem('om-theme'); } catch (e) { return null; } }
+    function save(v: string) { try { localStorage.setItem('om-theme', v); } catch (e) {} }
+    function current() {
+      const attr = root.getAttribute('data-theme');
+      if (attr) return attr;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('[data-theme-toggle]')) {
+        e.preventDefault();
+        const next = current() === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next); save(next);
+        return;
+      }
+      if (target.closest('[data-nav-toggle]')) {
+        document.getElementById('navlinks')?.classList.toggle('open'); return;
+      }
+      if (target.closest('#navlinks a')) {
+        document.getElementById('navlinks')?.classList.remove('open');
+      }
+    });
+
+    // copy buttons
+    document.querySelectorAll('.code').forEach((block) => {
+      const btn = block.querySelector('.code-copy') as HTMLButtonElement | null;
+      const pre = block.querySelector('pre');
+      if (!btn || !pre) return;
+      btn.addEventListener('click', () => {
+        const text = (pre.innerText || '').replace(/ /g, ' ');
+        const done = () => { const old = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = old; }, 1400); };
+        if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done).catch(() => {});
+        else { try { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); } catch (e) {} }
+      });
+    });
+
+    // TOC scrollspy
+    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".toc a[href^='#']"));
+    if (tocLinks.length && 'IntersectionObserver' in window) {
+      const map: Record<string, HTMLAnchorElement> = {};
+      tocLinks.forEach((a) => { const id = a.getAttribute('href')!.slice(1); const el = document.getElementById(id); if (el) map[id] = a; });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) { tocLinks.forEach((a) => a.classList.remove('active')); map[(en.target as HTMLElement).id]?.classList.add('active'); }
+        });
+      }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+      Object.keys(map).forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+    }
+
+    // reveal on scroll
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && 'IntersectionObserver' in window) {
+      const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      reveals.forEach((el) => { el.style.opacity = '0'; el.style.transform = 'translateY(14px)'; el.style.transition = 'opacity .5s ease, transform .5s ease'; });
+      const ro = new IntersectionObserver((entries) => {
+        entries.forEach((en) => { if (en.isIntersecting) { const t = en.target as HTMLElement; t.style.opacity = '1'; t.style.transform = 'none'; ro.unobserve(t); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      reveals.forEach((el) => ro.observe(el));
+    }
+  </script>
+</body>
+</html>

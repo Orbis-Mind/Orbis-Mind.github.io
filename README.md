@@ -3,42 +3,62 @@
 The official website for **[Orbis Mind](https://orbis-mind.github.io/)** — building the
 infrastructure layer for intelligent software.
 
-Live at **https://orbis-mind.github.io**
-
-## Pages
-
-| Page | File | Description |
-|---|---|---|
-| Home | `index.html` | Company overview, live projects, engineering principles |
-| Aether | `aether.html` | Flagship AI Workload Compiler + Execution Runtime |
-| OptiFlow | `optiflow.html` | Self-optimizing runtime for AI workflow graphs |
-| Docs | `docs.html` | Full Aether documentation (architecture, pillars, inventory, roadmap) |
+**Live at https://orbis-mind.github.io**
 
 ## Stack
 
-Hand-built static HTML/CSS/JS — **no framework, no build step, zero runtime dependencies**,
-in keeping with how Orbis Mind ships software. Fonts are served from Google Fonts; everything
-else is local. Deployed straight from `main` via GitHub Pages (`.nojekyll`).
+Built with **[Astro](https://astro.build)** + TypeScript. Component-based, markdown-driven
+blog (content collections + RSS), sitemap, strict typing, and a hand-crafted design system —
+no UI framework, no runtime JavaScript dependencies, in keeping with how Orbis Mind ships
+software. Deployed automatically to GitHub Pages via GitHub Actions on every push to `main`.
 
 ```
-.
-├── index.html
-├── aether.html
-├── optiflow.html
-├── docs.html
-├── favicon.svg
-└── assets/
-    ├── styles.css
-    └── app.js
+src/
+├── components/     BrandMark, Nav, Footer
+├── layouts/        Base.astro (head, theme, nav, footer, scripts)
+├── content/blog/   Markdown posts (content collection)
+├── content.config.ts
+├── pages/
+│   ├── index.astro        Home
+│   ├── aether.astro       Flagship product
+│   ├── optiflow.astro     OptiFlow
+│   ├── docs.astro         Aether documentation
+│   ├── blog/              Blog index + [...slug] post template
+│   ├── rss.xml.ts         RSS feed
+│   └── 404.astro
+└── styles/global.css      Design system (light + dark)
+public/                     favicon.svg, .nojekyll
 ```
 
-## Local preview
+## Develop
 
 ```bash
-python3 -m http.server 8000   # then open http://localhost:8000
+npm install
+npm run dev        # http://localhost:4321
+npm run build      # outputs to ./dist
+npm run preview    # preview the production build
 ```
 
-## Projects
+## Writing a post
+
+Add a Markdown file to `src/content/blog/`:
+
+```markdown
+---
+title: "Your title"
+description: "One-sentence summary used in listings and meta tags."
+date: 2026-11-20
+tag: Engineering
+author: Orbis Mind
+readingTime: "5 min read"
+---
+
+Body in Markdown…
+```
+
+It appears automatically in the blog index and the RSS feed.
+
+## Projects featured
 
 - **Aether** — https://github.com/Orbis-Mind/aether
 - **OptiFlow** — https://github.com/Orbis-Mind/optiflow

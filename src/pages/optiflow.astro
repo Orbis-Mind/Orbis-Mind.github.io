@@ -1,50 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OptiFlow — Self-optimizing Runtime for AI Workloads · Orbis Mind</title>
-  <meta name="description" content="OptiFlow is an adaptive compiler and self-optimizing runtime for AI workflow graphs. It discovers, measures, and verifies faster execution strategies — adopting only the ones proven correct.">
-  <meta name="theme-color" content="#FAF8F4">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="OptiFlow — Self-optimizing Runtime for AI Workloads">
-  <meta property="og:description" content="Discovers, measures, and verifies faster execution strategies for AI workflow graphs — adopting only the ones proven correct.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css">
-</head>
-<body>
-
-  <nav class="nav">
-    <div class="nav-in">
-      <a class="brand" href="index.html" aria-label="Orbis Mind home">
-        <svg class="mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
-          <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
-          <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
-          <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
-        </svg>
-        <span class="word">Orbis<b>·</b>Mind</span>
-      </a>
-      <div class="nav-links" id="navlinks">
-        <a href="index.html">Home</a>
-        <a href="aether.html">Aether</a>
-        <a href="optiflow.html" class="active">OptiFlow</a>
-        <a href="docs.html">Docs</a>
-        <a href="https://github.com/Orbis-Mind/optiflow" class="nav-cta" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-      <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle theme">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
-      </button>
-      <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Menu">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
-    </div>
-  </nav>
-
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base
+  title="OptiFlow — Self-optimizing Runtime for AI Workloads · Orbis Mind"
+  description="OptiFlow is an adaptive compiler and self-optimizing runtime for AI workflow graphs. It discovers, measures, and verifies faster execution strategies — adopting only the ones proven correct."
+  active="optiflow"
+>
   <header class="phero">
     <div class="wrap">
-      <div class="crumb"><a href="index.html">Orbis Mind</a><span class="sep">/</span><span>OptiFlow</span></div>
+      <div class="crumb"><a href={`${base}/`}>Orbis Mind</a><span class="sep">/</span><span>OptiFlow</span></div>
       <div class="kicker"><span class="status research" style="margin:0"><span class="dot"></span>Active</span> Research runtime · Go · MIT</div>
       <h1>Make it faster.<br>Prove it's still correct.</h1>
       <p class="lede">
@@ -54,7 +19,7 @@
       </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#loop">The adaptation loop
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
         <a class="btn btn-ghost" href="https://github.com/Orbis-Mind/optiflow" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
@@ -67,7 +32,6 @@
     </div>
   </section>
 
-  <!-- WHAT -->
   <section class="sec" id="what">
     <div class="wrap">
       <div class="sec-head">
@@ -99,7 +63,6 @@
     </div>
   </section>
 
-  <!-- LOOP -->
   <section class="sec" id="loop" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
@@ -118,7 +81,6 @@
     </div>
   </section>
 
-  <!-- EXAMPLE -->
   <section class="sec" id="example" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
@@ -140,7 +102,6 @@
     </div>
   </section>
 
-  <!-- QUICKSTART -->
   <section class="sec" id="quickstart" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
@@ -167,43 +128,14 @@
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="wrap sec" style="padding-top:0">
     <div class="cta" data-reveal>
       <h2>Explore OptiFlow on GitHub</h2>
       <p>Architecture decisions and research differentiation live in the repository's design docs.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="https://github.com/Orbis-Mind/optiflow" target="_blank" rel="noopener">Open the repository ↗</a>
-        <a class="btn btn-ghost" href="aether.html">See Aether</a>
+        <a class="btn btn-ghost" href={`${base}/aether`}>See Aether</a>
       </div>
     </div>
   </section>
-
-  <footer>
-    <div class="wrap">
-      <div class="foot">
-        <div>
-          <a class="brand" href="index.html" style="margin-bottom:16px">
-            <svg class="mark" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
-              <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
-              <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
-              <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
-            </svg>
-            <span class="word">Orbis<b>·</b>Mind</span>
-          </a>
-          <p class="about">Building the infrastructure layer for intelligent software.</p>
-        </div>
-        <div><h5>Projects</h5><a href="aether.html">Aether</a><a href="optiflow.html">OptiFlow</a><a href="docs.html">Documentation</a></div>
-        <div><h5>OptiFlow</h5><a href="#loop">Architecture</a><a href="#example">By example</a><a href="#quickstart">Quick start</a></div>
-        <div><h5>Source</h5><a href="https://github.com/Orbis-Mind" target="_blank" rel="noopener">GitHub org ↗</a><a href="https://github.com/Orbis-Mind/aether" target="_blank" rel="noopener">aether ↗</a><a href="https://github.com/Orbis-Mind/optiflow" target="_blank" rel="noopener">optiflow ↗</a></div>
-      </div>
-      <div class="foot-bottom">
-        <span class="mono">© 2026 Orbis Mind · MIT Licensed</span>
-        <span class="mono">Verified, or it doesn't ship.</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="assets/app.js" defer></script>
-</body>
-</html>
+</Base>

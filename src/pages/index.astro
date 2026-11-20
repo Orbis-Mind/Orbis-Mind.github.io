@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base
+  title="Orbis Mind — Infrastructure for intelligent software"
+  description="Orbis Mind builds the infrastructure layer for intelligent software: open-source compilers and runtimes that run AI workloads reliably, deterministically, and local-first. Home of Aether and OptiFlow."
+  active="home"
+>
+  <!-- announcement -->
+  <div class="topbar">
+    <div class="wrap">
+      <span class="tb-tag">New</span>
+      <span>Aether reaches production-hardened reliability — typed errors, bounded retries, verified artifacts.</span>
+      <a href={`${base}/blog/production-hardening-aether`}>Read the note →</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="hero-tag"><span class="dot"></span> Open-source infrastructure · two live runtimes</span>
+      <h1>The infrastructure layer<br>for <em>intelligent software.</em></h1>
+      <p class="lede">
+        Orbis Mind builds compilers and runtimes that turn AI workloads into validated,
+        deterministic execution — reliable by construction, local-first by default,
+        and honest about exactly what they do today.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={`${base}/aether`}>Explore Aether
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/Orbis-Mind" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"></path></svg>
+          Orbis-Mind on GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="wrap" aria-label="At a glance">
+    <div class="stats" data-reveal>
+      <div class="cell"><div class="num">2</div><div class="lbl">Live runtimes</div></div>
+      <div class="cell"><div class="num">0 <small>third-party deps</small></div><div class="lbl">Go standard library only</div></div>
+      <div class="cell"><div class="num">$0</div><div class="lbl">Local-first execution</div></div>
+      <div class="cell"><div class="num">MIT</div><div class="lbl">Fully open source</div></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="sec" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="01">Live projects</span>
+        <h2>Two runtimes, one thesis</h2>
+        <p>AI workloads should be <em>compiled and verified</em>, not wired together by hand. Each project
+          takes that idea to a different edge of the problem — and both ship today.</p>
+      </div>
+      <div class="projects">
+        <article class="pcard" data-reveal>
+          <div class="pcard-top">
+            <div class="pcard-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 7v6c0 4 3 6 7 8 4-2 7-4 7-8V7l-7-4Z"></path><path d="M9 12l2 2 4-4"></path></svg></div>
+            <div><h3>Aether</h3><div class="pcat">AI Workload Compiler · Runtime</div></div>
+            <span class="status live"><span class="dot"></span>Live</span>
+          </div>
+          <p>Compiles an AI workload definition into a validated, deterministic execution plan,
+             then runs it with retries, fallback, caching, memory, and full observability.</p>
+          <div class="spent">
+            <div class="chips"><span class="chip">Go</span><span class="chip">Deterministic</span><span class="chip">SHA-256 artifacts</span><span class="chip">Ollama · local-first</span></div>
+            <div class="pcard-links">
+              <a href={`${base}/aether`}>Overview <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+              <a href={`${base}/docs`} class="sub">Docs</a>
+              <a href="https://github.com/Orbis-Mind/aether" class="sub" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="pcard" data-reveal>
+          <div class="pcard-top">
+            <div class="pcard-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h7M4 12h11M4 17h6"></path><path d="M16 5l4 4-4 4"></path></svg></div>
+            <div><h3>OptiFlow</h3><div class="pcat">Self-optimizing Runtime</div></div>
+            <span class="status research"><span class="dot"></span>Active</span>
+          </div>
+          <p>An adaptive compiler and runtime for AI workflow graphs. It discovers, measures, and
+             <em>verifies</em> faster execution strategies — adopting only the ones proven correct.</p>
+          <div class="spent">
+            <div class="chips"><span class="chip">Go</span><span class="chip">DAG scheduling</span><span class="chip">Benchmarked + verified</span><span class="chip">Rollback</span></div>
+            <div class="pcard-links">
+              <a href={`${base}/optiflow`}>Overview <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+              <a href="https://github.com/Orbis-Mind/optiflow" class="sub" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="sec" style="padding-top:0" id="principles">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="02">How we build</span>
+        <h2>Engineering principles, not slogans</h2>
+        <p>The same commitments run through every repository we publish.</p>
+      </div>
+      <div class="grid3" data-reveal>
+        <div class="gcell"><div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18M8 4v16"></path></svg></div><h4>Local-first & offline</h4><p>The default path runs local models at $0 and stays on your machine. Cloud providers are optional, behind the same interface — never required.</p></div>
+        <div class="gcell"><div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 7.5 8 10 4.5-2.5 8-5 8-10V6l-8-4Z"></path><path d="M9 12l2 2 4-4"></path></svg></div><h4>Deterministic & verified</h4><p>The same input compiles to a byte-identical, SHA-256-verified artifact. Reproducible by design — no hidden timestamps, no non-determinism.</p></div>
+        <div class="gcell"><div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div><h4>Honest engineering</h4><p>Docs are written against the source, not marketing. Every feature is labelled implemented, partial, or planned — we never claim what the code doesn't do.</p></div>
+        <div class="gcell"><div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg></div><h4>Zero third-party deps</h4><p>Pure Go standard library. A single static binary, auditable top to bottom, with a tiny attack surface and reproducible releases (SBOM + checksums).</p></div>
+        <div class="gcell"><div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"></path></svg></div><h4>Measured, not guessed</h4><p>Routing and optimization decisions are driven by reproducible benchmarks on your data — a real feedback loop, not vendor priors.</p></div>
+        <div class="gcell"><div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z"></path><path d="M12 7v5l3 2"></path></svg></div><h4>Reliable by construction</h4><p>Typed errors, bounded retries with jitter, timeouts, cancellation, and ordered fallback — failure handling is part of the compiled plan.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FROM THE BLOG teaser -->
+  <section class="sec" style="padding-top:0" id="writing">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="03">From the blog</span>
+        <h2>Notes from the engine room</h2>
+        <p>How we think about compiling AI workloads, determinism, and measured reliability.</p>
+      </div>
+      <div class="post-list" data-reveal>
+        <a class="post-row" href={`${base}/blog/why-compile-ai-workloads`}>
+          <div class="pmeta"><span class="tag">Architecture</span>Nov 18, 2026</div>
+          <div><h3>Why we compile AI workloads instead of wiring them</h3><p>Separating what to run from how it runs turns a tangle of imperative glue into an artifact you can validate, ship, and observe.</p></div>
+          <svg class="parrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+        <a class="post-row" href={`${base}/blog/measured-routing`}>
+          <div class="pmeta"><span class="tag">Benchmarks</span>Nov 14, 2026</div>
+          <div><h3>Measured routing: the smallest model that's actually good enough</h3><p>On GSM8K, an 8B model isn't the most accurate. Here's why Aether routes on measured quality, not parameter count.</p></div>
+          <svg class="parrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+      </div>
+      <div style="margin-top:22px"><a class="btn btn-ghost" href={`${base}/blog`}>Read the blog
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wrap sec" style="padding-top:0">
+    <div class="cta" data-reveal>
+      <h2>Start with Aether</h2>
+      <p>Scaffold a workload, compile it to a verified artifact, and run it fully local in under a minute.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={`${base}/aether`}>Read the overview</a>
+        <a class="btn btn-ghost" href={`${base}/docs`}>Documentation</a>
+      </div>
+    </div>
+  </section>
+</Base>

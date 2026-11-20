@@ -1,0 +1,19 @@
+{
+  "name": "orbis-mind-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Official website for Orbis Mind — the infrastructure layer for intelligent software.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.13.0",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.4.0"
+  }
+}
