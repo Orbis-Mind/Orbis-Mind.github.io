@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbis Mind — Infrastructure for intelligent software</title>
+  <meta name="description" content="Orbis Mind builds the infrastructure layer for intelligent software: open-source compilers and runtimes that run AI workloads reliably, deterministically, and local-first. Home of Aether and OptiFlow.">
+  <meta name="theme-color" content="#FAF8F4">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Orbis Mind — Infrastructure for intelligent software">
+  <meta property="og:description" content="Open-source compilers and runtimes for AI workloads. Local-first, deterministic, verified. Home of Aether and OptiFlow.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-in">
+      <a class="brand" href="index.html" aria-label="Orbis Mind home">
+        <svg class="mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
+          <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
+        </svg>
+        <span class="word">Orbis<b>·</b>Mind</span>
+      </a>
+      <div class="nav-links" id="navlinks">
+        <a href="index.html" class="active">Home</a>
+        <a href="aether.html">Aether</a>
+        <a href="optiflow.html">OptiFlow</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com/Orbis-Mind" class="nav-cta" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle theme">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="hero-tag"><span class="dot"></span> Open-source infrastructure · two live runtimes</span>
+      <h1>The infrastructure layer<br>for <em>intelligent software.</em></h1>
+      <p class="lede">
+        Orbis Mind builds compilers and runtimes that turn AI workloads into validated,
+        deterministic execution — reliable by construction, local-first by default,
+        and honest about exactly what they do today.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="aether.html">Explore Aether
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/Orbis-Mind" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+          Orbis-Mind on GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="wrap" aria-label="At a glance">
+    <div class="stats" data-reveal>
+      <div class="cell"><div class="num">2</div><div class="lbl">Live runtimes</div></div>
+      <div class="cell"><div class="num">0 <small>third-party deps</small></div><div class="lbl">Go standard library only</div></div>
+      <div class="cell"><div class="num">$0</div><div class="lbl">Local-first execution</div></div>
+      <div class="cell"><div class="num">MIT</div><div class="lbl">Fully open source</div></div>
+    </div>
+  </section>
+
+  <!-- LIVE PROJECTS -->
+  <section class="sec" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="01">Live projects</span>
+        <h2>Two runtimes, one thesis</h2>
+        <p>AI workloads should be <em>compiled and verified</em>, not wired together by hand. Each project
+          takes that idea to a different edge of the problem — and both ship today.</p>
+      </div>
+
+      <div class="projects">
+        <!-- AETHER -->
+        <article class="pcard" data-reveal>
+          <div class="pcard-top">
+            <div class="pcard-logo">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 7v6c0 4 3 6 7 8 4-2 7-4 7-8V7l-7-4Z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <div>
+              <h3>Aether</h3>
+              <div class="pcat">AI Workload Compiler · Runtime</div>
+            </div>
+            <span class="status live"><span class="dot"></span>Live</span>
+          </div>
+          <p>Compiles an AI workload definition into a validated, deterministic execution plan,
+             then runs it with retries, fallback, caching, memory, and full observability.</p>
+          <div class="spent">
+            <div class="chips">
+              <span class="chip">Go</span>
+              <span class="chip">Deterministic</span>
+              <span class="chip">SHA-256 artifacts</span>
+              <span class="chip">Ollama · local-first</span>
+            </div>
+            <div class="pcard-links">
+              <a href="aether.html">Overview
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a href="docs.html" class="sub">Docs</a>
+              <a href="https://github.com/Orbis-Mind/aether" class="sub" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- OPTIFLOW -->
+        <article class="pcard" data-reveal>
+          <div class="pcard-top">
+            <div class="pcard-logo">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h7M4 12h11M4 17h6"/><path d="M16 5l4 4-4 4"/></svg>
+            </div>
+            <div>
+              <h3>OptiFlow</h3>
+              <div class="pcat">Self-optimizing Runtime</div>
+            </div>
+            <span class="status research"><span class="dot"></span>Active</span>
+          </div>
+          <p>An adaptive compiler and runtime for AI workflow graphs. It discovers, measures, and
+             <em>verifies</em> faster execution strategies — adopting only the ones proven correct.</p>
+          <div class="spent">
+            <div class="chips">
+              <span class="chip">Go</span>
+              <span class="chip">DAG scheduling</span>
+              <span class="chip">Benchmarked + verified</span>
+              <span class="chip">Rollback</span>
+            </div>
+            <div class="pcard-links">
+              <a href="optiflow.html">Overview
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a href="https://github.com/Orbis-Mind/optiflow" class="sub" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="sec" style="padding-top:0" id="principles">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="02">How we build</span>
+        <h2>Engineering principles, not slogans</h2>
+        <p>The same four commitments run through every repository we publish.</p>
+      </div>
+      <div class="grid3" data-reveal>
+        <div class="gcell">
+          <div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg></div>
+          <h4>Local-first & offline</h4>
+          <p>The default path runs local models at $0 and stays on your machine. Cloud providers are
+             optional, behind the same interface — never required.</p>
+        </div>
+        <div class="gcell">
+          <div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 7.5 8 10 4.5-2.5 8-5 8-10V6l-8-4Z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h4>Deterministic & verified</h4>
+          <p>The same input compiles to a byte-identical, SHA-256-verified artifact. Reproducible by
+             design — no hidden timestamps, no non-determinism.</p>
+        </div>
+        <div class="gcell">
+          <div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h4>Honest engineering</h4>
+          <p>Docs are written against the source, not marketing. Every feature is labelled implemented,
+             partial, or planned — we never claim a capability the code doesn't have.</p>
+        </div>
+        <div class="gcell">
+          <div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+          <h4>Zero third-party deps</h4>
+          <p>Pure Go standard library. A single static binary, auditable top to bottom, with a tiny
+             attack surface and reproducible releases (SBOM + checksums).</p>
+        </div>
+        <div class="gcell">
+          <div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"/></svg></div>
+          <h4>Measured, not guessed</h4>
+          <p>Routing and optimization decisions are driven by reproducible benchmarks on your data —
+             a real feedback loop, not vendor priors.</p>
+        </div>
+        <div class="gcell">
+          <div class="gi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z"/><path d="M12 7v5l3 2"/></svg></div>
+          <h4>Reliable by construction</h4>
+          <p>Typed errors, bounded retries with jitter, timeouts, cancellation, and ordered fallback —
+             failure handling is part of the compiled plan, not an afterthought.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wrap sec" style="padding-top:0">
+    <div class="cta" data-reveal>
+      <h2>Start with Aether</h2>
+      <p>Scaffold a workload, compile it to a verified artifact, and run it fully local in under a minute.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="aether.html">Read the overview</a>
+        <a class="btn btn-ghost" href="docs.html">Documentation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="brand" href="index.html" style="margin-bottom:16px">
+            <svg class="mark" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
+              <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
+              <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
+            </svg>
+            <span class="word">Orbis<b>·</b>Mind</span>
+          </a>
+          <p class="about">Building the infrastructure layer for intelligent software — open-source
+            compilers and runtimes for AI workloads.</p>
+        </div>
+        <div>
+          <h5>Projects</h5>
+          <a href="aether.html">Aether</a>
+          <a href="optiflow.html">OptiFlow</a>
+          <a href="docs.html">Documentation</a>
+        </div>
+        <div>
+          <h5>Aether</h5>
+          <a href="aether.html#how">How it works</a>
+          <a href="aether.html#benchmarks">Benchmarks</a>
+          <a href="aether.html#cli">CLI reference</a>
+          <a href="docs.html#roadmap">Roadmap</a>
+        </div>
+        <div>
+          <h5>Source</h5>
+          <a href="https://github.com/Orbis-Mind" target="_blank" rel="noopener">GitHub org ↗</a>
+          <a href="https://github.com/Orbis-Mind/aether" target="_blank" rel="noopener">aether ↗</a>
+          <a href="https://github.com/Orbis-Mind/optiflow" target="_blank" rel="noopener">optiflow ↗</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span class="mono">© 2026 Orbis Mind · MIT Licensed</span>
+        <span class="mono">Compiled for reliability.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js" defer></script>
+</body>
+</html>

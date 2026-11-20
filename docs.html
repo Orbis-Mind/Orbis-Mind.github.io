@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aether Documentation · Orbis Mind</title>
+  <meta name="description" content="Aether documentation — architecture, the compiler, the execution runtime, reliability, adaptive optimization, observability, the source-verified feature inventory, and the roadmap.">
+  <meta name="theme-color" content="#FAF8F4">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-in">
+      <a class="brand" href="index.html" aria-label="Orbis Mind home">
+        <svg class="mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
+          <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
+        </svg>
+        <span class="word">Orbis<b>·</b>Mind</span>
+      </a>
+      <div class="nav-links" id="navlinks">
+        <a href="index.html">Home</a>
+        <a href="aether.html">Aether</a>
+        <a href="optiflow.html">OptiFlow</a>
+        <a href="docs.html" class="active">Docs</a>
+        <a href="https://github.com/Orbis-Mind/aether" class="nav-cta" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle theme">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="doc-hero">
+    <div class="wrap">
+      <div class="crumb"><a href="index.html">Orbis Mind</a><span class="sep">/</span><a href="aether.html">Aether</a><span class="sep">/</span><span>Docs</span></div>
+      <h1>Aether Documentation</h1>
+      <p>Written against the source, not marketing. Every capability is labelled
+        <span class="pill done">implemented</span> <span class="pill partial">partial</span> or
+        <span class="pill plan">planned</span>. The ground truth is the
+        <a href="#inventory" style="color:var(--accent-ink)">feature inventory</a>.</p>
+    </div>
+  </div>
+
+  <div class="wrap docs">
+    <!-- TOC -->
+    <aside class="toc">
+      <h5>On this page</h5>
+      <div class="grouplbl">Getting started</div>
+      <a href="#overview">Overview</a>
+      <a href="#architecture">Architecture</a>
+      <div class="grouplbl">The five pillars</div>
+      <a href="#compiler">A · Compiler</a>
+      <a href="#runtime">B · Runtime</a>
+      <a href="#reliability">C · Reliability</a>
+      <a href="#optimization">D · Optimization</a>
+      <a href="#observability">E · Observability</a>
+      <div class="grouplbl">Reference</div>
+      <a href="#inventory">Feature inventory</a>
+      <a href="#roadmap">Roadmap</a>
+    </aside>
+
+    <!-- BODY -->
+    <main class="doc-body">
+
+      <!-- OVERVIEW -->
+      <h2 id="overview">Overview</h2>
+      <p class="lead">Aether compiles an AI <strong>workload definition</strong> into a validated, deterministic
+        <strong>execution plan</strong>, then runs that plan reliably. It picks the right model for the work as
+        part of compilation — but model routing is a supporting capability, not the product.</p>
+      <p>The guiding question: <em>how can an AI workload be compiled into an executable plan and executed
+        reliably and efficiently under changing runtime conditions?</em> You declare <em>what</em> to run and
+        <em>under what constraints</em>; Aether compiles that into a validated plan and manages its execution —
+        as a single static binary, with zero third-party Go dependencies, local-first and offline after a model
+        is pulled.</p>
+      <div class="callout">
+        <strong>Scope note.</strong> Today a workload is a single model operation with its policy, memory, and
+        tools; Aether compiles it to a linear execution plan and runs it reliably. The multi-operation compiler
+        and runtime — execution graphs (DAGs), cross-operation scheduling, and recovery — are the
+        <a href="#roadmap" style="color:var(--accent-ink)">roadmap</a>, clearly marked throughout.
+      </div>
+
+      <!-- ARCHITECTURE -->
+      <h2 id="architecture">Architecture</h2>
+      <p class="lead">The real component map and the execution lifecycle, with a clear boundary between
+        <em>existing</em> and <em>proposed</em> functionality.</p>
+
+      <h3>Component map (existing)</h3>
+      <div class="tablewrap">
+        <table class="data">
+          <thead><tr><th>Package</th><th>Responsibility</th></tr></thead>
+          <tbody>
+            <tr><td><code>cmd/aether</code></td><td>CLI entry point</td></tr>
+            <tr><td><code>internal/compiler</code></td><td>Validate, classify, route, build the plan, write the <code>.ae</code> artifact</td></tr>
+            <tr><td><code>internal/router</code></td><td>Model-selection pipeline (task → policy filter → scoring → selection)</td></tr>
+            <tr><td><code>internal/policy</code></td><td>Cost / quality / latency / privacy constraint engine</td></tr>
+            <tr><td><code>internal/classifier</code></td><td>Offline heuristic task analysis</td></tr>
+            <tr><td><code>internal/models</code></td><td>Model registry with measured / estimated quality provenance</td></tr>
+            <tr><td><code>internal/runtime</code></td><td>Execute a compiled plan: render, cache, provider call, persist</td></tr>
+            <tr><td><code>internal/provider</code></td><td><code>ModelProvider</code> abstraction (Ollama, OpenAI-compatible, Anthropic, mock)</td></tr>
+            <tr><td><code>internal/cache · memory</code></td><td>Bounded response cache; local vector store + entity memory</td></tr>
+            <tr><td><code>internal/observability · logging</code></td><td>Run records, routing dataset, metrics; structured <code>slog</code> + execution IDs</td></tr>
+            <tr><td><code>internal/eval · registry · yamlx</code></td><td>Offline evaluation; local artifact registry; strict YAML parser</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Execution lifecycle</h3>
+      <ol>
+        <li><strong>Define</strong> — author <code>agent.ae.yaml</code> (a Workload Definition).</li>
+        <li><strong>Compile</strong> (<code>aether build</code>) — validate → classify → select model → optimize → emit a deterministic plan.</li>
+        <li><strong>Run</strong> (<code>aether run</code>) — render → cache → provider call (retry / fallback / stream) → persist memory + trace.</li>
+        <li><strong>Observe</strong> (<code>aether stats</code>, logs) — metrics, traces, routing dataset.</li>
+        <li><strong>Improve</strong> (<code>aether evaluate</code>) — measured quality overlays the registry and changes future model selection.</li>
+      </ol>
+      <p>A compiled plan currently describes <strong>one operation</strong> with a fixed linear step list:
+        <code>retrieve → inject → render → execute → store → cache</code>.</p>
+
+      <h3>Existing vs. proposed</h3>
+      <div class="tablewrap">
+        <table class="data">
+          <thead><tr><th>Concern</th><th>Existing</th><th>Proposed</th></tr></thead>
+          <tbody>
+            <tr><td>Plan shape</td><td>Linear step list for one operation</td><td>Intermediate Representation + Execution Graph (DAG)</td></tr>
+            <tr><td>Scheduling</td><td>One operation per run</td><td>Operation Scheduler for independent operations</td></tr>
+            <tr><td>Dependencies</td><td>None (single operation)</td><td>Cross-operation dependency resolution</td></tr>
+            <tr><td>Recovery</td><td>Retry + fallback within an operation</td><td>Recovery Engine (checkpoint / resume)</td></tr>
+            <tr><td>Optimization</td><td>Static + routing feedback</td><td>Adaptive Optimizer comparing validated plans</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">The proposed layer is additive: the existing compiler and runtime become the single-node
+        case of a graph. No current component is slated for removal.</p>
+
+      <!-- COMPILER -->
+      <h2 id="compiler">Pillar A · The Compiler</h2>
+      <p class="lead">The compiler turns a Workload Definition into a validated, deterministic Execution Plan,
+        written as a <code>.ae</code> artifact. <span class="pill done">implemented</span></p>
+      <h3>Pipeline — <code>aether build</code></h3>
+      <ul>
+        <li><strong>Parse + validate</strong> — strict YAML rejects tab indentation, duplicate keys, and malformed lines with line numbers; schema validation rejects unknown top-level / <code>policy</code> / <code>memory</code> keys; input size limit.</li>
+        <li><strong>Classify</strong> — offline heuristic analysis: task type, difficulty, risk, reasoning / tool needs.</li>
+        <li><strong>Select a model</strong> — filter candidates by policy (cost, quality, latency, privacy), score survivors, choose one.</li>
+        <li><strong>Optimize</strong> — prompt compression, token estimation, cache-strategy selection.</li>
+        <li><strong>Emit</strong> — a <code>core.ExecutionPlan</code> embedded in a versioned <code>.ae</code> artifact.</li>
+      </ul>
+      <h3>Artifact format (<code>.ae</code>)</h3>
+      <ul>
+        <li>Versioned container: <code>magic ‖ size ‖ checksum ‖ zip(payload)</code>.</li>
+        <li><strong>v2</strong> stores a full SHA-256 and <strong>verifies it on read</strong>; <strong>v1</strong> (legacy truncated checksum) is still readable. Bounds-checked and size-limited — a corrupt artifact returns an error, never a panic (fuzz-tested).</li>
+        <li><strong>Deterministic</strong> — the same spec compiles to a byte-identical artifact (content-addressed plan ID + <code>SOURCE_DATE_EPOCH</code> build time).</li>
+      </ul>
+      <h3>Not yet implemented</h3>
+      <p>
+        <span class="pill plan">planned</span> Intermediate Representation (IR) distinct from the plan ·
+        dependency analysis across operations · Execution Graphs (DAGs) · parallel-execution detection ·
+        multi-operation Workload Definitions.
+      </p>
+
+      <!-- RUNTIME -->
+      <h2 id="runtime">Pillar B · The Execution Runtime</h2>
+      <p class="lead">The runtime executes a compiled Execution Plan for one request.
+        <span class="pill done">implemented</span></p>
+      <h3>Execution</h3>
+      <ol>
+        <li><strong>Render</strong> the system / user prompt, injecting retrieved memory when the plan's retrieval strategy requires it.</li>
+        <li><strong>Cache lookup</strong> — only for prompts marked safe to reuse (<code>cache.Cacheable</code>).</li>
+        <li><strong>Provider call</strong> through <code>internal/provider</code>, with retries + fallback; streams deltas when requested.</li>
+        <li><strong>Persist</strong> — memory (semantic / long-term) and cache; record an execution trace.</li>
+      </ol>
+      <h3>Semantics</h3>
+      <ul>
+        <li><strong>Context-aware</strong> — <code>RunContext</code> / <code>RunStreamContext</code> thread a <code>context.Context</code>; the CLI wires <code>signal.NotifyContext</code>, so Ctrl-C / SIGTERM cancels in-flight work.</li>
+        <li><strong>Per-run state</strong> — model used, tokens, cost, latency, retries, cache hit, execution ID, error.</li>
+        <li><strong>Provider-agnostic</strong> — all model I/O goes through the <code>ModelProvider</code> interface; the runtime contains no provider-specific code.</li>
+      </ul>
+      <p><span class="pill plan">planned</span> Operation Scheduler · cross-operation dependency handling ·
+        intermediate-result passing · DAG execution (the runtime executes one operation per run today).</p>
+
+      <!-- RELIABILITY -->
+      <h2 id="reliability">Pillar C · Reliability &amp; Fault Recovery</h2>
+      <p class="lead">How Aether handles failure during execution.
+        <span class="pill done">implemented</span></p>
+      <ul>
+        <li><strong>Typed errors</strong> — <code>PermanentError</code> (missing key, model not pulled, auth) fails fast to the next fallback; <code>TransientError</code> (timeout, network, provider 5xx) is retryable. Context cancellation is propagated, not misreported.</li>
+        <li><strong>Retries &amp; backoff</strong> — configurable <code>MaxRetries</code>; exponential backoff with ±25% jitter, bounded and interruptible (caller cancellation wakes it immediately).</li>
+        <li><strong>Timeouts &amp; cancellation</strong> — per-attempt deadlines from the caller's context; <code>ctx.Err()</code> checked before each attempt.</li>
+        <li><strong>Fallback</strong> — an ordered fallback-model chain bounded by <code>FallbackMaxAttempts</code>; a permanent failure skips straight to the next model.</li>
+        <li><strong>Structured failure info</strong> — every result carries success / failure, the error string, retry count, and the model actually used.</li>
+      </ul>
+      <p><span class="pill plan">planned</span> Recovery Engine — checkpointing and resume <em>across operations</em>
+        (meaningful once the DAG runtime exists); idempotency / exactly-once across a multi-operation graph.</p>
+
+      <!-- OPTIMIZATION -->
+      <h2 id="optimization">Pillar D · Adaptive Optimization</h2>
+      <p class="lead">How Aether improves execution over time. This is the least complete pillar, and this says so plainly.</p>
+      <h3>Implemented</h3>
+      <ul>
+        <li><span class="pill done">implemented</span> <strong>Metrics collection</strong> — every run records latency, tokens, cost, success, retries, cache status; a routing dataset (JSONL) captures task features and outcomes.</li>
+        <li><span class="pill done">implemented</span> <strong>Measured-quality routing feedback</strong> — <code>aether evaluate</code> scores models with deterministic grading and writes measured per-task quality (provenance <code>meas</code>) that overlays the registry, so future compilation routes on observed results rather than estimated priors (<code>est</code>). A genuine feedback loop.</li>
+        <li><span class="pill partial">partial</span> <strong>Static compile-time optimization</strong> — prompt compression and cache-strategy selection.</li>
+      </ul>
+      <h3>Correctness principle (design commitment)</h3>
+      <div class="callout">
+        When the optimizer is built, it must <strong>never</strong> adopt a candidate plan that has not passed
+        validation against the baseline on both correctness and performance. Today there is no automatic plan
+        rewriting, so nothing can bypass this rule — but the rule is stated now so the implementation inherits it.
+      </div>
+      <p><span class="pill plan">planned</span> Adaptive Optimizer comparing alternative plans ·
+        scheduling / resource-allocation optimization · bottleneck-driven plan changes · the validation gate machinery.</p>
+
+      <!-- OBSERVABILITY -->
+      <h2 id="observability">Pillar E · Observability</h2>
+      <p class="lead">What Aether records about execution. <span class="pill done">implemented</span></p>
+      <ul>
+        <li><strong>Execution traces</strong> — per-run records (model, tokens, cost, latency, success, cache status, retries, error, timestamp) persisted to <code>runs.json</code>; a routing dataset appended to <code>routing.jsonl</code>.</li>
+        <li><strong>Metrics</strong> — operation latency including <strong>P50 / P90 / P99</strong> and max, success rate, retries, failures, cache hit rate, and cost / token totals. <code>aether stats</code> renders the summary.</li>
+        <li><strong>Structured logging</strong> — JSON (or text) to stderr via <code>log/slog</code>; level from <code>AETHER_LOG_LEVEL</code> (default <code>warn</code>, quiet by default so <code>--json</code> output is never polluted). Each run is tagged with an <strong>execution ID</strong>; lifecycle events <code>run.start</code>, <code>run.complete</code>, <code>run.failed</code>.</li>
+        <li><strong>Reproducible benchmarks</strong> — <code>aether evaluate</code> produces deterministic, machine-readable results.</li>
+      </ul>
+      <p><span class="pill partial">partial</span> Resource consumption — tokens / cost tracked, in-process CPU/RAM sampling not.
+        <span class="pill plan">planned</span> OpenTelemetry export / distributed tracing across operations.</p>
+      <div class="callout neutral">
+        <strong>Known inconsistency (documented, not silently patched).</strong> With <code>--json</code>,
+        <code>aether run</code> currently writes progress lines to stdout <em>before</em> the JSON object, so
+        piping straight into <code>jq</code> fails. The structured logs on stderr are clean. Recommended fix:
+        suppress the banner / progress lines on stdout when <code>--json</code> is set.
+      </div>
+
+      <!-- INVENTORY -->
+      <h2 id="inventory">Feature inventory (source-verified)</h2>
+      <p class="lead">Derived from the actual source code — the ground truth the rest of the docs are written against.
+        Audited on <code>main</code>, 2026-11-16.</p>
+      <div class="tablewrap">
+        <table class="data">
+          <thead><tr><th>Capability</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Structured workload definition + static validation (strict YAML, schema, size limits)</td><td><span class="pill done">implemented</span></td></tr>
+            <tr><td>Executable plan generation (model selection, prompt opt, token estimation, cache strategy)</td><td><span class="pill done">implemented</span></td></tr>
+            <tr><td>Deterministic compilation + integrity-verified <code>.ae</code> artifact (v2, full SHA-256)</td><td><span class="pill done">implemented</span></td></tr>
+            <tr><td>Execution steps as a general graph (DAG)</td><td><span class="pill partial">partial</span> linear only</td></tr>
+            <tr><td>Dependency analysis · DAGs · parallel detection · multi-operation workloads</td><td><span class="pill plan">planned</span></td></tr>
+            <tr><td>Single-operation execution, state, context-aware cancellation, bounded concurrency</td><td><span class="pill done">implemented</span></td></tr>
+            <tr><td>Scheduling independent ops · cross-op dependencies · intermediate results · DAG execution</td><td><span class="pill plan">planned</span></td></tr>
+            <tr><td>Typed errors · bounded retries + jitter · timeouts/cancellation · fallback chain</td><td><span class="pill done">implemented</span></td></tr>
+            <tr><td>Checkpointing / recovery across operations</td><td><span class="pill plan">planned</span></td></tr>
+            <tr><td>Metrics + routing dataset · measured-quality feedback loop</td><td><span class="pill done">implemented</span></td></tr>
+            <tr><td>Comparing alternative plans · scheduling/resource optimization</td><td><span class="pill plan">planned</span></td></tr>
+            <tr><td>Execution traces, latency percentiles, structured logs + execution IDs, reproducible benchmarks</td><td><span class="pill done">implemented</span></td></tr>
+            <tr><td>In-process CPU/RAM sampling</td><td><span class="pill partial">partial</span> not sampled</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted"><strong>Honest summary.</strong> Aether today is a single-workload compiler + reliable
+        single-operation runtime with strong routing, evaluation, and observability. The multi-operation
+        compiler / runtime (DAGs, dependency scheduling, recovery, plan optimization) is the architectural
+        direction, not current functionality — and is labelled as such everywhere.</p>
+
+      <!-- ROADMAP -->
+      <h2 id="roadmap">Roadmap</h2>
+      <p class="lead">Proposed functionality — none of it is implemented unless also marked
+        <span class="pill done">implemented</span> in the inventory. The direction: extend the compiler from a
+        linear, single-operation plan to an execution graph (DAG) of operations, and the runtime to
+        dependency-aware scheduling with recovery and plan optimization — without changing the local-first,
+        zero-dependency constraints.</p>
+      <div class="steps">
+        <div class="step"><div class="sn">M1</div><div><h4>Intermediate Representation + Execution Graph</h4><p>Define an IR distinct from the plan; accept multi-operation definitions; dependency analysis and a validated DAG; detect parallelizable operations.</p></div></div>
+        <div class="step"><div class="sn">M2</div><div><h4>Operation Scheduler</h4><p>Execute a DAG — schedule independent operations, honor dependencies, pass intermediate results along edges, with bounded concurrency across operations.</p></div></div>
+        <div class="step"><div class="sn">M3</div><div><h4>Recovery Engine</h4><p>Checkpoint completed operations; resume without repeating successful work; preserve execution state across restarts.</p></div></div>
+        <div class="step"><div class="sn">M4</div><div><h4>Adaptive Optimizer</h4><p>Compare alternative plans using collected metrics; optimize scheduling / resource allocation — behind a hard validation gate.</p></div></div>
+        <div class="step"><div class="sn">M5</div><div><h4>Observability depth</h4><p>In-process CPU/RAM sampling; optional OpenTelemetry export; trace a full graph execution.</p></div></div>
+      </div>
+      <p style="margin-top:22px"><strong>Near-term (already scoped):</strong> native SSE streaming for cloud
+        providers · read model metadata from local model files · atomic (temp-file + rename) persistence.</p>
+      <p class="muted"><strong>Out of scope:</strong> running model weights in-process (Aether delegates inference
+        to engines); becoming an agent framework or an API gateway.</p>
+
+      <div class="callout" style="margin-top:40px">
+        Ready to build? Head to the <a href="aether.html#quickstart" style="color:var(--accent-ink)">quick start</a>
+        or clone <a href="https://github.com/Orbis-Mind/aether" style="color:var(--accent-ink)" target="_blank" rel="noopener">Orbis-Mind/aether</a> on GitHub.
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="brand" href="index.html" style="margin-bottom:16px">
+            <svg class="mark" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
+              <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
+              <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
+            </svg>
+            <span class="word">Orbis<b>·</b>Mind</span>
+          </a>
+          <p class="about">Building the infrastructure layer for intelligent software.</p>
+        </div>
+        <div><h5>Projects</h5><a href="aether.html">Aether</a><a href="optiflow.html">OptiFlow</a><a href="docs.html">Documentation</a></div>
+        <div><h5>Docs</h5><a href="#architecture">Architecture</a><a href="#compiler">Compiler</a><a href="#inventory">Feature inventory</a><a href="#roadmap">Roadmap</a></div>
+        <div><h5>Source</h5><a href="https://github.com/Orbis-Mind" target="_blank" rel="noopener">GitHub org ↗</a><a href="https://github.com/Orbis-Mind/aether" target="_blank" rel="noopener">aether ↗</a><a href="https://github.com/Orbis-Mind/optiflow" target="_blank" rel="noopener">optiflow ↗</a></div>
+      </div>
+      <div class="foot-bottom">
+        <span class="mono">© 2026 Orbis Mind · MIT Licensed</span>
+        <span class="mono">Documented against the source.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js" defer></script>
+</body>
+</html>

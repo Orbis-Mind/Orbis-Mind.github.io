@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aether — AI Workload Compiler &amp; Execution Runtime · Orbis Mind</title>
+  <meta name="description" content="Aether compiles an AI workload definition into a validated, deterministic execution plan, then runs it with retries, fallback, caching, and full observability. Local-first, zero third-party dependencies.">
+  <meta name="theme-color" content="#FAF8F4">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Aether — AI Workload Compiler & Execution Runtime">
+  <meta property="og:description" content="Compile an AI workload into a verified, deterministic plan and run it reliably. Local-first, zero dependencies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-in">
+      <a class="brand" href="index.html" aria-label="Orbis Mind home">
+        <svg class="mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
+          <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
+        </svg>
+        <span class="word">Orbis<b>·</b>Mind</span>
+      </a>
+      <div class="nav-links" id="navlinks">
+        <a href="index.html">Home</a>
+        <a href="aether.html" class="active">Aether</a>
+        <a href="optiflow.html">OptiFlow</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com/Orbis-Mind/aether" class="nav-cta" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle theme">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="phero">
+    <div class="wrap">
+      <div class="crumb"><a href="index.html">Orbis Mind</a><span class="sep">/</span><span>Aether</span></div>
+      <div class="kicker"><span class="status live" style="margin:0"><span class="dot"></span>Live</span> Flagship project · Go · MIT</div>
+      <h1>Compile the workload.<br>Run it reliably.</h1>
+      <p class="lede">
+        Aether is an <strong>AI workload compiler and execution runtime</strong>. You declare
+        <em>what</em> to run and under <em>what constraints</em>; Aether validates it, selects a model,
+        and emits a deterministic, integrity-verified plan — then executes that plan with retries,
+        fallback, caching, memory, and full observability.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#quickstart">Quick start
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="docs.html">Documentation</a>
+        <a class="btn btn-ghost" href="https://github.com/Orbis-Mind/aether" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="wrap">
+    <div class="stats">
+      <div class="cell"><div class="num">1</div><div class="lbl">Static binary</div></div>
+      <div class="cell"><div class="num">0 <small>deps</small></div><div class="lbl">Go stdlib only</div></div>
+      <div class="cell"><div class="num">15</div><div class="lbl">CLI commands</div></div>
+      <div class="cell"><div class="num">~44<small>%</small></div><div class="lbl">Test coverage</div></div>
+    </div>
+  </section>
+
+  <!-- WHAT IT IS / IS NOT -->
+  <section class="sec" id="what">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="01">Positioning</span>
+        <h2>What Aether is — and isn't</h2>
+        <p>Model routing is a <em>supporting capability</em>, not the product. The product is the compiler
+          and the runtime.</p>
+      </div>
+      <div class="cols2">
+        <div class="panel">
+          <h4>Aether is</h4>
+          <ul class="ticks">
+            <li>An <strong>AI Workload Compiler</strong> — validates a definition, selects a model under your constraints, optimizes prompts, estimates cost, and emits a deterministic <code>.ae</code> artifact.</li>
+            <li>An <strong>Execution Runtime</strong> — runs the compiled plan with context-aware execution, retries + fallback, bounded concurrency, caching, memory, and structured observability.</li>
+            <li><strong>Local-first</strong> — the default path uses local models via Ollama at $0 and stays on your machine. Cloud providers are optional, behind the same interface.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h4>Aether is not</h4>
+          <ul class="crosses">
+            <li>Not primarily an LLM model router (routing supports compilation).</li>
+            <li>Not an API gateway.</li>
+            <li>Not an offline inference engine — it delegates to providers like Ollama; it does not run model weights itself.</li>
+            <li>Not a prompt-engineering framework.</li>
+            <li>Not a LangChain-style agent framework.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout neutral">
+        <strong>Scope, stated plainly.</strong> Today a <em>workload</em> is a single model operation with its
+        policy, memory, and tools; Aether compiles it to a linear plan and runs it reliably. Multi-operation
+        execution graphs (DAGs), cross-operation scheduling, and recovery are the <em>roadmap</em> — clearly
+        marked throughout. The docs never claim a feature the code doesn't have.
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="sec" id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="02">How it works</span>
+        <h2>From definition to verified plan</h2>
+        <p><code>aether build</code> turns <code>agent.ae.yaml</code> into a deterministic <code>.ae</code> artifact.</p>
+      </div>
+
+      <div class="diagram" data-reveal>
+        <p class="flow-label">Compiler · internal/compiler</p>
+        <div class="flow">
+          <div class="node"><div class="nt">Definition</div><div class="nd">agent.ae.yaml</div></div>
+          <svg class="arr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <div class="node"><div class="nt">Validate</div><div class="nd">strict YAML + schema</div></div>
+          <svg class="arr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <div class="node"><div class="nt">Classify</div><div class="nd">type · difficulty · risk</div></div>
+          <svg class="arr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <div class="node"><div class="nt">Select model</div><div class="nd">policy filter + score</div></div>
+          <svg class="arr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <div class="node accent"><div class="nt">Execution Plan</div><div class="nd">.ae · SHA-256 · deterministic</div></div>
+        </div>
+        <p class="flow-label" style="margin-top:28px">Runtime · internal/runtime</p>
+        <div class="flow">
+          <div class="node"><div class="nt">Render</div><div class="nd">prompt + injected memory</div></div>
+          <svg class="arr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <div class="node"><div class="nt">Cache</div><div class="nd">bounded · safe-to-reuse</div></div>
+          <svg class="arr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <div class="node accent"><div class="nt">Provider call</div><div class="nd">retry · jitter · fallback · stream</div></div>
+          <svg class="arr" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <div class="node"><div class="nt">Persist</div><div class="nd">memory · trace · metrics</div></div>
+        </div>
+      </div>
+
+      <div class="steps" data-reveal style="margin-top:22px">
+        <div class="step"><div class="sn">1</div><div><h4>Parse &amp; validate</h4><p>Strict YAML — tabs, duplicate keys, and unknown fields are rejected with line numbers — plus schema validation and input-size limits.</p></div></div>
+        <div class="step"><div class="sn">2</div><div><h4>Classify</h4><p>Offline heuristic task analysis: type, difficulty, risk, and reasoning / tool needs. No network, no model call.</p></div></div>
+        <div class="step"><div class="sn">3</div><div><h4>Select a model</h4><p>The routing pipeline filters candidates by policy — <code>cost</code>, <code>quality</code>, <code>latency</code>, <code>privacy</code> — then scores the survivors and chooses one.</p></div></div>
+        <div class="step"><div class="sn">4</div><div><h4>Optimize</h4><p>Compress prompts, estimate tokens and cost, and select a cache strategy for the task's complexity.</p></div></div>
+        <div class="step"><div class="sn">5</div><div><h4>Emit a plan</h4><p>A deterministic <code>core.ExecutionPlan</code> with a linear step list, written into a versioned, SHA-256-verified <code>.ae</code> artifact (reads legacy v1). Same spec → byte-identical artifact.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELIABILITY -->
+  <section class="sec" id="reliability" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="03">Reliability</span>
+        <h2>Failure handling is part of the plan</h2>
+        <p>Not an afterthought bolted on at call sites — it is compiled in.</p>
+      </div>
+      <div class="grid3" data-reveal>
+        <div class="gcell">
+          <h4>Typed errors</h4>
+          <p>Permanent (missing key, model not pulled) vs. transient (timeout, temporary network). Permanent errors fail fast to the next fallback; timeouts are never misreported as "unreachable".</p>
+        </div>
+        <div class="gcell">
+          <h4>Bounded retries</h4>
+          <p>Exponential backoff with ±25% jitter — bounded, interruptible, never a retry storm. Caller cancellation wakes the backoff immediately.</p>
+        </div>
+        <div class="gcell">
+          <h4>Timeouts &amp; cancellation</h4>
+          <p>Per-attempt deadlines derived from the caller's context; Ctrl-C / SIGTERM propagates into provider calls and aborts the whole run.</p>
+        </div>
+        <div class="gcell">
+          <h4>Ordered fallback</h4>
+          <p>An ordered fallback-model chain, bounded by policy. A permanent failure on one model skips straight to the next.</p>
+        </div>
+        <div class="gcell">
+          <h4>Structured failure info</h4>
+          <p>Every result carries success/failure, the error, the retry count, and the model actually used — nothing is swallowed.</p>
+        </div>
+        <div class="gcell">
+          <h4>Measured routing feedback</h4>
+          <p><code>aether evaluate</code> writes measured quality that overlays the registry, so future compilation routes on <em>your</em> data, not vendor priors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENCHMARKS -->
+  <section class="sec" id="benchmarks" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="04">Benchmarks</span>
+        <h2>Measured, reproducible, honest</h2>
+        <p>Measured on local models via Ollama on an Apple-Silicon machine. These describe
+           <em>these models, on these datasets, on this hardware</em> — your numbers will vary.
+           Nothing is hand-written; reproduce with <code>aether evaluate</code>.</p>
+      </div>
+
+      <h3 style="font-size:17px;margin:0 0 12px;color:var(--muted);font-family:var(--mono);font-weight:500;letter-spacing:.02em">GSM8K — external math benchmark · 200 questions · exact-match grading</h3>
+      <div class="tablewrap" data-reveal>
+        <table class="data">
+          <thead><tr><th>Model</th><th>Accuracy</th><th>95% CI</th><th>RAM</th></tr></thead>
+          <tbody>
+            <tr><td><strong>phi3</strong> <span class="muted">(3.8B)</span></td><td class="num-cell"><strong>83.0%</strong></td><td class="num-cell">±5.2%</td><td class="num-cell">3.85 GB</td></tr>
+            <tr><td>qwen2.5:3b</td><td class="num-cell">82.0%</td><td class="num-cell">±5.3%</td><td class="num-cell">2.16 GB</td></tr>
+            <tr><td>llama3:8b</td><td class="num-cell">79.0%</td><td class="num-cell">±5.6%</td><td class="num-cell">5.02 GB</td></tr>
+            <tr><td>gemma2:2b</td><td class="num-cell">59.0%</td><td class="num-cell">±6.8%</td><td class="num-cell">1.93 GB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <strong>The point of measured routing:</strong> the larger 8B model is <em>not</em> the most accurate here.
+        Aether is built to pick the smallest model that is actually good enough — on your data, not a vendor's slide.
+      </div>
+
+      <h3 style="font-size:17px;margin:34px 0 12px;color:var(--muted);font-family:var(--mono);font-weight:500;letter-spacing:.02em">Aether built-in dataset — aether-basic-v1 · 44 tasks · keyword/regex grading</h3>
+      <div class="tablewrap" data-reveal>
+        <table class="data">
+          <thead><tr><th>Model</th><th>Measured quality</th><th>Success</th></tr></thead>
+          <tbody>
+            <tr><td><strong>phi3</strong></td><td class="num-cell">91.7%</td><td class="num-cell">100%</td></tr>
+            <tr><td>gemma2:2b</td><td class="num-cell">83.0%</td><td class="num-cell">100%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK START -->
+  <section class="sec" id="quickstart" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="05">Quick start</span>
+        <h2>Fully local, in under a minute</h2>
+        <p>Requires Go 1.26+. Zero third-party dependencies. Optional local inference with
+           <a href="https://ollama.com" target="_blank" rel="noopener" style="color:var(--accent-ink)">Ollama</a> (recommended, $0).</p>
+      </div>
+
+      <div class="cols2">
+        <div>
+          <div class="code" data-reveal>
+            <div class="code-head"><span class="dots"><i></i><i></i><i></i></span><span class="tf">build from source</span><button class="code-copy">Copy</button></div>
+            <pre><code><span class="c"># clone and build a single static binary</span>
+<span class="k">git</span> clone https://github.com/Orbis-Mind/aether
+<span class="k">cd</span> aether
+<span class="k">go</span> build <span class="p">-o</span> aether ./cmd/aether</code></pre>
+          </div>
+          <div class="code" data-reveal style="margin-top:16px">
+            <div class="code-head"><span class="dots"><i></i><i></i><i></i></span><span class="tf">optional local inference</span><button class="code-copy">Copy</button></div>
+            <pre><code><span class="c"># install Ollama, then pull a small model</span>
+<span class="k">ollama</span> serve <span class="o">&amp;</span>
+<span class="k">ollama</span> pull llama3.2</code></pre>
+          </div>
+        </div>
+        <div>
+          <div class="code" data-reveal>
+            <div class="code-head"><span class="dots"><i></i><i></i><i></i></span><span class="tf">scaffold · compile · run</span><button class="code-copy">Copy</button></div>
+            <pre><code><span class="c"># scaffold a workload, check env, compile, run</span>
+<span class="k">./aether</span> init my-agent <span class="o">&amp;&amp;</span> <span class="k">cd</span> my-agent
+<span class="k">../aether</span> doctor        <span class="c"># Go, Ollama, models, perms</span>
+<span class="k">../aether</span> build         <span class="c"># agent.ae.yaml → .ae artifact</span>
+<span class="k">../aether</span> run <span class="p">--local</span> \
+  <span class="p">--message</span> <span class="s">"Explain caching in one paragraph"</span></code></pre>
+          </div>
+          <div class="code" data-reveal style="margin-top:16px">
+            <div class="code-head"><span class="dots"><i></i><i></i><i></i></span><span class="tf">no model? use the mock provider</span><button class="code-copy">Copy</button></div>
+            <pre><code><span class="k">aether</span> run <span class="p">--mock</span> <span class="p">--message</span> <span class="s">"Hello"</span>
+<span class="k">aether</span> inspect my-agent-1.0.0.ae</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIG -->
+  <section class="sec" id="config" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="06">Configuration</span>
+        <h2>A workload is a single file</h2>
+        <p>Declare the constraints; the compiler enforces them. Unknown keys are rejected at compile time.</p>
+      </div>
+      <div class="code" data-reveal>
+        <div class="code-head"><span class="dots"><i></i><i></i><i></i></span><span class="tf">agent.ae.yaml</span><button class="code-copy">Copy</button></div>
+        <pre><code><span class="p">name</span>: my-agent
+<span class="p">version</span>: <span class="s">"1.0.0"</span>
+<span class="p">description</span>: <span class="s">"What this workload does"</span>
+
+<span class="p">policy</span>:
+  <span class="p">quality</span>:   { minimum: <span class="s">0.80</span> }     <span class="c"># absolute quality floor (0..1)</span>
+  <span class="p">cost</span>:      { max_per_run: <span class="s">0.01</span> } <span class="c"># USD budget per run</span>
+  <span class="p">latency</span>:   { max_p95: <span class="s">2000</span> }     <span class="c"># ms</span>
+  <span class="p">privacy</span>:   { level: local }      <span class="c"># hard constraint: never calls cloud</span>
+  <span class="p">execution</span>: { local_first: <span class="k">true</span> } <span class="c"># prefer an installed local model</span>
+  <span class="p">fallback</span>:  { enabled: <span class="k">true</span>, max_attempts: <span class="s">2</span> }
+
+<span class="p">memory</span>:
+  <span class="p">semantic</span>: <span class="k">true</span>
+  <span class="p">long_term</span>: <span class="k">false</span>
+  <span class="p">ttl_seconds</span>: <span class="s">86400</span>
+
+<span class="p">tools</span>:
+  - <span class="p">name</span>: search
+    <span class="p">description</span>: Search a knowledge base
+
+<span class="p">prompts</span>:
+  <span class="p">system</span>: You are a helpful assistant.
+  <span class="p">user_template</span>: <span class="s">"{user_message}"</span></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLI -->
+  <section class="sec" id="cli" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="07">CLI reference</span>
+        <h2>One binary, fifteen commands</h2>
+      </div>
+      <div class="tablewrap" data-reveal>
+        <table class="data">
+          <thead><tr><th>Command</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>aether init [name]</code></td><td>Scaffold a new workload definition</td></tr>
+            <tr><td><code>aether build [spec]</code></td><td>Compile <code>.ae.yaml</code> → <code>.ae</code> artifact</td></tr>
+            <tr><td><code>aether run [artifact]</code></td><td>Execute a compiled plan (<code>--local</code> · <code>--mock</code> · <code>--strategy</code> · <code>--stream</code> · <code>--json</code>)</td></tr>
+            <tr><td><code>aether test [spec]</code></td><td>Validate a spec and show the model-selection decision</td></tr>
+            <tr><td><code>aether inspect [artifact]</code></td><td>Show a compiled plan and its routing</td></tr>
+            <tr><td><code>aether models</code></td><td>Local + catalogue models with quality provenance</td></tr>
+            <tr><td><code>aether doctor</code></td><td>Environment checks (Go, Ollama, models, permissions)</td></tr>
+            <tr><td><code>aether evaluate [dataset]</code></td><td>Offline, deterministic model benchmark (<code>--save</code>)</td></tr>
+            <tr><td><code>aether benchmark --runs N</code></td><td>Runtime cost / latency / quality benchmark</td></tr>
+            <tr><td><code>aether stats</code></td><td>Observability report (P50/P90/P99)</td></tr>
+            <tr><td><code>aether publish · pull · search</code></td><td>Local artifact registry</td></tr>
+            <tr><td><code>aether --version</code></td><td>Version</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSITIONING -->
+  <section class="sec" id="positioning" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-n="08">Related work</span>
+        <h2>Where Aether sits</h2>
+        <p>Architectural references — categories, not products to copy. Aether makes no superiority claims
+           without reproducible benchmarks.</p>
+      </div>
+      <div class="tablewrap" data-reveal>
+        <table class="data">
+          <thead><tr><th>Project</th><th>Category</th><th>Aether's difference</th></tr></thead>
+          <tbody>
+            <tr><td>Temporal</td><td>Durable workflow engine</td><td>AI-workload-specific: compile + model selection + eval feedback</td></tr>
+            <tr><td>LangGraph</td><td>Agent / graph orchestration</td><td>Compiles a validated plan + artifact; not an agent framework</td></tr>
+            <tr><td>DSPy</td><td>Prompt-program compiler</td><td>Compiles execution + reliability, not prompt programs</td></tr>
+            <tr><td>vLLM / SGLang</td><td>Inference engines</td><td>Delegates inference to engines; does not run weights</td></tr>
+            <tr><td>Arize Phoenix</td><td>LLM observability</td><td>Includes execution observability as one pillar</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wrap sec" style="padding-top:0">
+    <div class="cta" data-reveal>
+      <h2>Read the full documentation</h2>
+      <p>Compiler, runtime, reliability, optimization, observability, architecture, and the roadmap —
+         all written against the source.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="docs.html">Open the docs</a>
+        <a class="btn btn-ghost" href="https://github.com/Orbis-Mind/aether" target="_blank" rel="noopener">Star on GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="brand" href="index.html" style="margin-bottom:16px">
+            <svg class="mark" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
+              <ellipse cx="16" cy="16" rx="12.2" ry="5.1" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-28 16 16)"/>
+              <circle cx="26.2" cy="10.8" r="2.5" fill="var(--accent)"/>
+            </svg>
+            <span class="word">Orbis<b>·</b>Mind</span>
+          </a>
+          <p class="about">Building the infrastructure layer for intelligent software.</p>
+        </div>
+        <div><h5>Projects</h5><a href="aether.html">Aether</a><a href="optiflow.html">OptiFlow</a><a href="docs.html">Documentation</a></div>
+        <div><h5>Aether</h5><a href="#how">How it works</a><a href="#benchmarks">Benchmarks</a><a href="#cli">CLI reference</a><a href="docs.html#roadmap">Roadmap</a></div>
+        <div><h5>Source</h5><a href="https://github.com/Orbis-Mind" target="_blank" rel="noopener">GitHub org ↗</a><a href="https://github.com/Orbis-Mind/aether" target="_blank" rel="noopener">aether ↗</a><a href="https://github.com/Orbis-Mind/optiflow" target="_blank" rel="noopener">optiflow ↗</a></div>
+      </div>
+      <div class="foot-bottom">
+        <span class="mono">© 2026 Orbis Mind · MIT Licensed</span>
+        <span class="mono">Compiled for reliability.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
